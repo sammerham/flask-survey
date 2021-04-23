@@ -33,6 +33,9 @@ def display_questions(question_num):
     """ displays current quesstion"""
 
     question = survey.questions[question_num]
+    responses = session["responses"]
+    # if len(responses) < question_num:
+    #     return redirect(f'questions/{len(responses)}') 
     return render_template('question.html', question = question)
 
 @app.route("/answer", methods=["POST"])
