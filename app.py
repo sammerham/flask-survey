@@ -31,9 +31,15 @@ def begin_survey():
 @app.route("/questions/<int:question_num>")
 def display_questions(question_num):
     """ displays current quesstion"""
-
-    question = survey.questions[question_num]
     responses = session["responses"]
+    if len(responses) == len(survey.questions):
+        flash("Invalid Question Path")
+        return render_template("completion.html")
+    if len(responses) < question_num:
+        flash("Invalid Question Number Input, Please Answer The Next Question:")
+        question = survey.questions[len(responses)]
+    else:
+        question = survey.questions[question_num]
     # if len(responses) < question_num:
     #     return redirect(f'questions/{len(responses)}') 
     return render_template('question.html', question = question)
